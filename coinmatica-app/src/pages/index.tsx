@@ -65,17 +65,17 @@ export default Home;
 // Component to showcase protected routes using Auth
 const AuthShowcase: React.FC = () => {
   const { data: secretMessage } = trpc.proxy.auth.getSecretMessage.useQuery();
-  const { data: sessionData } = useSession();
+  const { data: session } = useSession();
 
   return (
     <div>
-      {sessionData && <p>Logged in as {sessionData?.user?.name}</p>}
+      {session && <p>Logged in as {session?.user?.name}</p>}
       {secretMessage && <p>{secretMessage}</p>}
       <button
         className="px-4 py-2 border-2 border-blue-500 rounded-md"
-        onClick={sessionData ? () => signOut() : () => signIn()}
+        onClick={session ? () => signOut() : () => signIn()}
       >
-        {sessionData ? "Sign out" : "Sign in"}
+        {session ? "Sign out" : "Sign in"}
       </button>
     </div>
   );
