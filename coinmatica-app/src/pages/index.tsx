@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { trpc } from "../utils/trpc";
+import MainLayout from '../components/MainLayout'
 
 const Home: NextPage = () => {
   const hello = trpc.proxy.example.hello.useQuery({ text: "from tRPC" });
@@ -13,7 +14,7 @@ const Home: NextPage = () => {
         <meta name="description" content="Automate crypto signals" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="container flex flex-col items-center justify-center min-h-screen p-4 mx-auto">
+      <MainLayout>
         <h1 className="text-5xl md:text-[5rem] leading-normal font-extrabold text-gray-700">
           Create <span className="text-purple-300">T3</span> App
         </h1>
@@ -54,7 +55,7 @@ const Home: NextPage = () => {
           {hello.data ? <p>{hello.data.greeting}</p> : <p>Loading..</p>}
         </div>
         <AuthShowcase />
-      </main>
+      </MainLayout>
     </>
   );
 };
