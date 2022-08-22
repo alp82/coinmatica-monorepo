@@ -38,9 +38,9 @@ export const userSettingsRouter = t.router({
   updateTelegram: t.procedure
     .input(z.object({
       userId: z.string(),
-      telegramAppApiId: z.string().nullish(),
-      telegramAppApiHash: z.string().nullish(),
-      telegramAuthCode: z.string().nullish(),
+      telegramAppApiId: z.string().optional(),
+      telegramAppApiHash: z.string().optional(),
+      telegramAuthCode: z.string().optional(),
     }))
     .mutation(async ({ input }) => {
       const { userId, ...telegramSettings } = input
