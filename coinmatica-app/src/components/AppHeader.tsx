@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { signOut, useSession } from 'next-auth/react'
 
 import { classNames } from '../utils/styles'
+import logo from '../images/logo.png'
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', current: true },
@@ -29,8 +30,10 @@ const AppHeader = () => {
                   <div className="flex-shrink-0">
                     <Image
                       className="h-8 w-8"
-                      src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
-                      alt="Workflow"
+                      width="32"
+                      height="32"
+                      src={logo}
+                      alt="Coinmatica Logo"
                     />
                   </div>
                   <div className="hidden md:block">
@@ -69,7 +72,13 @@ const AppHeader = () => {
                       <div>
                         <Menu.Button className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                           <span className="sr-only">Open user menu</span>
-                          <Image className="h-8 w-8 rounded-full" src={session?.user?.image || ""} alt="" />
+                          <Image
+                            className="h-8 w-8 rounded-full"
+                            width="32"
+                            height="32"
+                            src={session?.user?.image || ""}
+                            alt="User avatar"
+                          />
                         </Menu.Button>
                       </div>
                       <Transition
@@ -137,7 +146,13 @@ const AppHeader = () => {
               <div className="pt-4 pb-3 border-t border-gray-700">
                 <div className="flex items-center px-5">
                   <div className="flex-shrink-0">
-                    <Image className="h-10 w-10 rounded-full" src={session?.user?.image || ""} alt="" />
+                    <Image
+                      className="h-10 w-10 rounded-full"
+                      width="40"
+                      height="40"
+                      src={session?.user?.image || ""}
+                      alt="User avatar"
+                    />
                   </div>
                   <div className="ml-3">
                     <div className="text-base font-medium leading-none text-white">{session?.user?.name}</div>

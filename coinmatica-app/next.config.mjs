@@ -14,6 +14,11 @@ function defineNextConfig(config) {
 }
 
 export default defineNextConfig({
+  images: {
+    domains: [
+      'cdn.discordapp.com',
+    ],
+  },
   reactStrictMode: true,
   swcMinify: true,
 });
