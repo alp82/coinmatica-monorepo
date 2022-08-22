@@ -2,7 +2,9 @@ import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { signOut, useSession } from 'next-auth/react'
+
 import { classNames } from '../utils/styles'
 
 const navigation = [
@@ -25,7 +27,7 @@ const AppHeader = () => {
               <div className="flex items-center justify-between h-16">
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
-                    <img
+                    <Image
                       className="h-8 w-8"
                       src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
                       alt="Workflow"
@@ -67,7 +69,7 @@ const AppHeader = () => {
                       <div>
                         <Menu.Button className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                           <span className="sr-only">Open user menu</span>
-                          <img className="h-8 w-8 rounded-full" src={session?.user?.image || undefined} alt="" />
+                          <Image className="h-8 w-8 rounded-full" src={session?.user?.image || ""} alt="" />
                         </Menu.Button>
                       </div>
                       <Transition
@@ -85,7 +87,7 @@ const AppHeader = () => {
                               {({ active }) => (
                                 <a
                                   href={item.href}
-                                  onClick={() => item.action ? item.action() : () => {}}
+                                  onClick={() => item.action ? item.action() : undefined}
                                   className={classNames(
                                     active ? 'bg-gray-100' : '',
                                     'block px-4 py-2 text-sm text-gray-700'
@@ -135,7 +137,7 @@ const AppHeader = () => {
               <div className="pt-4 pb-3 border-t border-gray-700">
                 <div className="flex items-center px-5">
                   <div className="flex-shrink-0">
-                    <img className="h-10 w-10 rounded-full" src={session?.user?.image || undefined} alt="" />
+                    <Image className="h-10 w-10 rounded-full" src={session?.user?.image || ""} alt="" />
                   </div>
                   <div className="ml-3">
                     <div className="text-base font-medium leading-none text-white">{session?.user?.name}</div>
@@ -155,7 +157,7 @@ const AppHeader = () => {
                       key={item.name}
                       as="a"
                       href={item.href}
-                      onClick={() => item.action ? item.action() : () => {}}
+                      onClick={() => item.action ? item.action() : undefined}
                       className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700"
                     >
                       {item.name}

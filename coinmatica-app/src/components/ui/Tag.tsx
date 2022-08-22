@@ -23,3 +23,5 @@ const Tag = () => {
     </a>
   )
 }
+
+export default Tag

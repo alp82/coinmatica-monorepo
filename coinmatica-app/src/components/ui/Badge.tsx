@@ -1,7 +1,6 @@
 import React from 'react'
 import { classNames } from '../../utils/styles'
 import { Color, BGColor, TextColor } from '../../utils/colors'
-import { Property } from 'csstype'
 
 interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   children: React.ReactNode
@@ -10,7 +9,7 @@ interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   classNameInactive?: string
 }
 
-export function Badge({children, color = 'grey', ...htmlProps}: BadgeProps) {
+const Badge =({children, color = 'grey', ...htmlProps}: BadgeProps) => {
   const { className, ...spanProps} = htmlProps
 
   const textColor = TextColor[color]
@@ -31,3 +30,5 @@ export function Badge({children, color = 'grey', ...htmlProps}: BadgeProps) {
     </span>
   )
 }
+
+export default Badge

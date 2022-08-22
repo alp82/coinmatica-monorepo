@@ -1,15 +1,16 @@
 import { KeyIcon, UserCircleIcon, ViewGridAddIcon } from '@heroicons/react/outline'
 import React from 'react'
+import Head from 'next/head'
+import Link from 'next/link'
 import { useSession } from 'next-auth/react'
+
 import { trpc } from '../utils/trpc'
 import { classNames } from '../utils/styles'
-import { Badge } from '../components/ui/Badge'
+import Badge from '../components/ui/Badge'
+import TextInput from '../components/ui/TextInput'
 import { TelegramConnectionStatus } from '../types/models/TelegramClientInfo'
-import { TextInput } from '../components/ui/TextInput'
 import { UserSettings } from '../types/models/UserSettings'
-import Head from 'next/head'
 import MainLayout from '../components/MainLayout'
-import Link from 'next/link'
 
 const navigation = [
   {name: 'Account', href: '#', icon: UserCircleIcon, current: true},

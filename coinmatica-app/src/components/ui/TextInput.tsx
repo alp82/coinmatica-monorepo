@@ -6,7 +6,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   description?: React.ReactNode
 }
 
-export function TextInput({label, description, ...htmlProps}: InputProps) {
+const TextInput = ({label, description, ...htmlProps}: InputProps) => {
   const { className, ...inputProps} = htmlProps
 
   return (
@@ -30,3 +30,5 @@ export function TextInput({label, description, ...htmlProps}: InputProps) {
     </div>
   )
 }
+
+export default TextInput

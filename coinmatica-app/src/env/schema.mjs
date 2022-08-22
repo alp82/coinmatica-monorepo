@@ -8,10 +8,11 @@ import { z } from "zod";
 export const serverSchema = z.object({
   DISCORD_CLIENT_ID: z.string(),
   DISCORD_CLIENT_SECRET: z.string(),
-  NEXTAUTH_SECRET: z.string(),
-  NEXTAUTH_URL: z.string().url(),
   MONGO_DB: z.string(),
   MONGO_URL: z.string(),
+  NEXTAUTH_SECRET: z.string(),
+  NEXTAUTH_URL: z.string().url(),
+  REDIS_URL: z.string(),
 });
 
 /**
