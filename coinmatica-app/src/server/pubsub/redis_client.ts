@@ -4,7 +4,7 @@ import Redis from "ioredis"
 
 let client: Redis
 
-export const getClient = () => {
+export const getRedisClient = () => {
   if (client) return client
 
   client = new Redis(env.REDIS_URL)
