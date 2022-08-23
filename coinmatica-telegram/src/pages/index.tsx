@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { trpc } from "../utils/trpc";
+import Test from '../../../shared/Test'
 
 const Home: NextPage = () => {
   const hello = trpc.proxy.example.hello.useQuery({ text: "from tRPC" });
@@ -16,6 +17,8 @@ const Home: NextPage = () => {
         <h1>
           Create <span>T3</span> App
         </h1>
+
+        <Test />
 
         <div>
           <h3>This stack uses:</h3>
