@@ -17,11 +17,6 @@ export default defineNextConfig({
   experimental: {
     externalDir: true,
   },
-  images: {
-    domains: [
-      'cdn.discordapp.com',
-    ],
-  },
   reactStrictMode: true,
   swcMinify: true,
 });
