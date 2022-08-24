@@ -1,0 +1,10 @@
+services:
+  coinmatica-telegram:
+    build:
+      dockerfile: coinmatica-telegram/Dockerfile
+      context: .
+    environment:
+      PORT: ${COINMATICA_TELEGRAM_PORT}
+    ports:
+      - ${COINMATICA_TELEGRAM_PORT}:${COINMATICA_TELEGRAM_PORT}
+    restart: always
