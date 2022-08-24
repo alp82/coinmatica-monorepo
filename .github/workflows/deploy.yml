@@ -13,10 +13,12 @@ jobs:
 
     # Runs a set of commands using the runners shell
     - name: Run a multi-line script
+      env:
+        HETZNER_SSH_PRIVATE_KEY: ${{secrets.HETZNER_SSH_PRIVATE_KEY}}
       run: |
-        echo pk: ${{ secrets.HETZNER_SSH_PRIVATE_KEY }}
-        echo host: ${{ secrets.HETZNER_SSH_HOST }}
-        echo user: ${{ secrets.HETZNER_SSH_PRIHETZNER_SSH_USERVATE_KEY }}
+        echo pk: "${HETZNER_SSH_PRIVATE_KEY}"
+        echo host: "${{secrets.HETZNER_SSH_HOST}}"
+        echo user: "${{secrets.HETZNER_SSH_PRIHETZNER_SSH_USERVATE_KEY}}"
 
     - uses: alex-ac/github-action-ssh-docker-compose@master
       name: Docker-Compose Remote Deployment
