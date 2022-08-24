@@ -19,13 +19,13 @@ jobs:
       run: |
         echo pk: "${HETZNER_SSH_PRIVATE_KEY}"
         echo host: "${{secrets.HETZNER_SSH_HOST}}"
-        echo user: "${{secrets.HETZNER_SSH_PRIHETZNER_SSH_USERVATE_KEY}}"
+        echo user: "${{secrets.HETZNER_SSH_USER}}"
 
     - uses: alex-ac/github-action-ssh-docker-compose@master
       name: Docker-Compose Remote Deployment
       with:
-        ssh_private_key: ${{ secrets.HETZNER_SSH_PRIVATE_KEY }}
-        ssh_host: ${{ secrets.HETZNER_SSH_HOST }}
-        ssh_user: ${{ secrets.HETZNER_SSH_USER }}
+        ssh_private_key: ${{secrets.HETZNER_SSH_PRIVATE_KEY}}
+        ssh_host: ${{secrets.HETZNER_SSH_HOST}}
+        ssh_user: ${{secrets.HETZNER_SSH_USER}}
         docker_compose_prefix: coinmatica-telegram
         docker_compose_filename: coinmatica-telegram/docker-compose.yml
