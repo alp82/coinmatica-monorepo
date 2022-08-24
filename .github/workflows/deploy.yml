@@ -14,8 +14,8 @@ jobs:
     - uses: alex-ac/github-action-ssh-docker-compose@master
       name: Docker-Compose Remote Deployment
       with:
-        ssh_host: example.com
         ssh_private_key: ${{ secrets.HETZNER_SSH_PRIVATE_KEY }}
+        ssh_host: ${{ secrets.HETZNER_SSH_HOST }}
         ssh_user: ${{ secrets.HETZNER_SSH_USER }}
         docker_compose_prefix: coinmatica-telegram
         docker_compose_filename: coinmatica-telegram/docker-compose.yml
