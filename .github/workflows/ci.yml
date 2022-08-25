@@ -48,8 +48,8 @@ jobs:
         key: ${{ secrets.HETZNER_SSH_PRIVATE_KEY  }}
         port: 22
         script: |
-          grep -q '^COINMATICA_APP_PORT=' /etc/environment && sed -i 's/^COINMATICA_APP_PORT.*/COINMATICA_APP_PORT=${COINMATICA_APP_PORT}/' /etc/environment || echo 'COINMATICA_APP_PORT=${COINMATICA_APP_PORT}' >> /etc/environment
-          grep -q '^COINMATICA_TELEGRAM_PORT=' /etc/environment && sed -i 's/^COINMATICA_TELEGRAM_PORT.*/COINMATICA_TELEGRAM_PORT=${COINMATICA_TELEGRAM_PORT}/' /etc/environment || echo 'COINMATICA_TELEGRAM_PORT=${COINMATICA_TELEGRAM_PORT}' >> /etc/environment
+          grep -q '^COINMATICA_APP_PORT=' /etc/environment && sed -i 's/^COINMATICA_APP_PORT.*/COINMATICA_APP_PORT=$${secrets.COINMATICA_APP_PORT}}/' /etc/environment || echo 'COINMATICA_APP_PORT=$${secrets.COINMATICA_APP_PORT}}' >> /etc/environment
+          grep -q '^COINMATICA_TELEGRAM_PORT=' /etc/environment && sed -i 's/^COINMATICA_TELEGRAM_PORT.*/COINMATICA_TELEGRAM_PORT=$${secrets.COINMATICA_TELEGRAM_PORT}}/' /etc/environment || echo 'COINMATICA_TELEGRAM_PORT=$${secrets.COINMATICA_TELEGRAM_PORT}}' >> /etc/environment
 
     - uses: alex-ac/github-action-ssh-docker-compose@master
       name: Docker-Compose Remote Deployment
