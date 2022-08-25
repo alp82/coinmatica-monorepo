@@ -25,12 +25,6 @@ jobs:
 
     - uses: alex-ac/github-action-ssh-docker-compose@master
       name: Docker-Compose Remote Deployment
-      with:
-        ssh_private_key: ${{secrets.HETZNER_SSH_PRIVATE_KEY}}
-        ssh_host: ${{secrets.HETZNER_SSH_HOST}}
-        ssh_user: ${{secrets.HETZNER_SSH_USER}}
-        docker_compose_prefix: coinmatica
-        docker_compose_filename: docker-compose.yml
       env:
         COINMATICA_APP_PORT: ${{secrets.COINMATICA_APP_PORT}}
         COINMATICA_TELEGRAM_PORT: ${{secrets.COINMATICA_TELEGRAM_PORT}}
@@ -48,3 +42,9 @@ jobs:
         SOKETI_APP_SECRET: ${{secrets.SOKETI_APP_SECRET}}
         SOKETI_HOST: ${{secrets.SOKETI_HOST}}
         SOKETI_PORT: ${{secrets.SOKETI_PORT}}
+      with:
+        ssh_private_key: ${{secrets.HETZNER_SSH_PRIVATE_KEY}}
+        ssh_host: ${{secrets.HETZNER_SSH_HOST}}
+        ssh_user: ${{secrets.HETZNER_SSH_USER}}
+        docker_compose_prefix: coinmatica
+        docker_compose_filename: docker-compose.yml
