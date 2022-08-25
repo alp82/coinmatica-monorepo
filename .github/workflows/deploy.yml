@@ -35,11 +35,22 @@ jobs:
         echo mongo: "${MONGO_URL}"
         echo soketi: "${SOKETI_HOST}"
 
+    - name: Set env vars on remote server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HETZNER_SSH_HOST }}
+        username: ${{ secrets.HETZNER_SSH_USER }}
+        key: ${{ secrets.HETZNER_SSH_PRIVATE_KEY  }}
+        port: 22
+        script: |
+          export COINMATICA_APP_PORT=${{ secrets.COINMATICA_APP_PORT }}
+          export COINMATICA_TELEGRAM_PORT=${{ secrets.COINMATICA_TELEGRAM_PORT }}
+
     - uses: alex-ac/github-action-ssh-docker-compose@master
       name: Docker-Compose Remote Deployment
       with:
-        ssh_private_key: ${{secrets.HETZNER_SSH_PRIVATE_KEY}}
         ssh_host: ${{secrets.HETZNER_SSH_HOST}}
         ssh_user: ${{secrets.HETZNER_SSH_USER}}
+        ssh_private_key: ${{secrets.HETZNER_SSH_PRIVATE_KEY}}
         docker_compose_prefix: coinmatica
         docker_compose_filename: docker-compose.yml
