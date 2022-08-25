@@ -12,6 +12,16 @@ services:
       context: .
     environment:
       - PORT=3100
+      - MONGO_USER=${MONGO_USER}
+      - MONGO_PASS=${MONGO_PASS}
+      - MONGO_DB=${MONGO_DB}
+      - MONGO_URL=${MONGO_URL}
+      - REDIS_URL=${REDIS_URL}
+      - SOKETI_APP_ID=${SOKETI_APP_ID=}
+      - SOKETI_APP_KEY=${SOKETI_APP_KEY}
+      - SOKETI_APP_SECRET=${SOKETI_APP_SECRET}
+      - SOKETI_HOST=${SOKETI_HOST}
+      - SOKETI_PORT=${SOKETI_PORT}
     ports:
       - 3100:3100
     restart: always
