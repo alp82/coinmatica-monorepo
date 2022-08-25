@@ -13,43 +13,37 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment: production
-    env:
-      COINMATICA_APP_PORT: ${{secrets.COINMATICA_APP_PORT}}
-      COINMATICA_TELEGRAM_PORT: ${{secrets.COINMATICA_TELEGRAM_PORT}}
-      NEXTAUTH_SECRET: ${{secrets.NEXTAUTH_SECRET}}
-      NEXTAUTH_URL: ${{secrets.NEXTAUTH_URL}}
-      DISCORD_CLIENT_ID: ${{secrets.DISCORD_CLIENT_ID}}
-      DISCORD_CLIENT_SECRET: ${{secrets.DISCORD_CLIENT_SECRET}}
-      MONGO_USER: ${{secrets.MONGO_USER}}
-      MONGO_PASS: ${{secrets.MONGO_PASS}}
-      MONGO_DB: ${{secrets.MONGO_DB}}
-      MONGO_URL: ${{secrets.MONGO_URL}}
-      REDIS_URL: ${{secrets.REDIS_URL}}
-      SOKETI_APP_ID: ${{secrets.SOKETI_APP_ID}}
-      SOKETI_APP_KEY: ${{secrets.SOKETI_APP_KEY}}
-      SOKETI_APP_SECRET: ${{secrets.SOKETI_APP_SECRET}}
-      SOKETI_HOST: ${{secrets.SOKETI_HOST}}
-      SOKETI_PORT: ${{secrets.SOKETI_PORT}}
+#    env:
+#      COINMATICA_APP_PORT: ${{secrets.COINMATICA_APP_PORT}}
+#      COINMATICA_TELEGRAM_PORT: ${{secrets.COINMATICA_TELEGRAM_PORT}}
+#      NEXTAUTH_SECRET: ${{secrets.NEXTAUTH_SECRET}}
+#      NEXTAUTH_URL: ${{secrets.NEXTAUTH_URL}}
+#      DISCORD_CLIENT_ID: ${{secrets.DISCORD_CLIENT_ID}}
+#      DISCORD_CLIENT_SECRET: ${{secrets.DISCORD_CLIENT_SECRET}}
+#      MONGO_USER: ${{secrets.MONGO_USER}}
+#      MONGO_PASS: ${{secrets.MONGO_PASS}}
+#      MONGO_DB: ${{secrets.MONGO_DB}}
+#      MONGO_URL: ${{secrets.MONGO_URL}}
+#      REDIS_URL: ${{secrets.REDIS_URL}}
+#      SOKETI_APP_ID: ${{secrets.SOKETI_APP_ID}}
+#      SOKETI_APP_KEY: ${{secrets.SOKETI_APP_KEY}}
+#      SOKETI_APP_SECRET: ${{secrets.SOKETI_APP_SECRET}}
+#      SOKETI_HOST: ${{secrets.SOKETI_HOST}}
+#      SOKETI_PORT: ${{secrets.SOKETI_PORT}}
 
     steps:
     - uses: actions/checkout@v3
 
-    - name: Debug Env
-      run: |
-        echo port: "${COINMATICA_APP_PORT}"
-        echo mongo: "${MONGO_URL}"
-        echo soketi: "${SOKETI_HOST}"
-
-    - name: Set env vars on remote server
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HETZNER_SSH_HOST }}
-        username: ${{ secrets.HETZNER_SSH_USER }}
-        key: ${{ secrets.HETZNER_SSH_PRIVATE_KEY  }}
-        port: 22
-        script: |
-          grep -q '^COINMATICA_APP_PORT=' /etc/environment && sed -i 's/^COINMATICA_APP_PORT.*/COINMATICA_APP_PORT=$${secrets.COINMATICA_APP_PORT}}/' /etc/environment || echo 'COINMATICA_APP_PORT=$${secrets.COINMATICA_APP_PORT}}' >> /etc/environment
-          grep -q '^COINMATICA_TELEGRAM_PORT=' /etc/environment && sed -i 's/^COINMATICA_TELEGRAM_PORT.*/COINMATICA_TELEGRAM_PORT=$${secrets.COINMATICA_TELEGRAM_PORT}}/' /etc/environment || echo 'COINMATICA_TELEGRAM_PORT=$${secrets.COINMATICA_TELEGRAM_PORT}}' >> /etc/environment
+#    - name: Set env vars on remote server
+#      uses: appleboy/ssh-action@master
+#      with:
+#        host: ${{ secrets.HETZNER_SSH_HOST }}
+#        username: ${{ secrets.HETZNER_SSH_USER }}
+#        key: ${{ secrets.HETZNER_SSH_PRIVATE_KEY  }}
+#        port: 22
+#        script: |
+#          grep -q '^COINMATICA_APP_PORT=' /etc/environment && sed -i 's/^COINMATICA_APP_PORT.*/COINMATICA_APP_PORT=$${secrets.COINMATICA_APP_PORT}}/' /etc/environment || echo 'COINMATICA_APP_PORT=$${secrets.COINMATICA_APP_PORT}}' >> /etc/environment
+#          grep -q '^COINMATICA_TELEGRAM_PORT=' /etc/environment && sed -i 's/^COINMATICA_TELEGRAM_PORT.*/COINMATICA_TELEGRAM_PORT=$${secrets.COINMATICA_TELEGRAM_PORT}}/' /etc/environment || echo 'COINMATICA_TELEGRAM_PORT=$${secrets.COINMATICA_TELEGRAM_PORT}}' >> /etc/environment
 
     - uses: alex-ac/github-action-ssh-docker-compose@master
       name: Docker-Compose Remote Deployment
