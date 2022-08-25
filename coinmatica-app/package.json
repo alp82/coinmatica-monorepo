@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "NODE_OPTIONS='-r tsconfig-paths/register' next dev",
-    "build": "./build.sh",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },

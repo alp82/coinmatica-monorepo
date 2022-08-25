@@ -25,7 +25,7 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 # Install dependencies based on the preferred package manager
-COPY ./coinmatica-telegram/package.json ./coinmatica-telegram/yarn.lock* ./coinmatica-telegram/package-lock.json* pnpm-lock.yaml* ./
+COPY ./coinmatica-telegram/package.json ./coinmatica-telegram/yarn.lock* ./coinmatica-telegram/package-lock.json* ./coinmatica-telegram/pnpm-lock.yaml* ./
 RUN \
   if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
   elif [ -f package-lock.json ]; then npm ci; \
@@ -41,7 +41,7 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /shared
 
 # Install dependencies based on the preferred package manager
-COPY ./shared/package.json ./shared/yarn.lock* ./shared/package-lock.json* pnpm-lock.yaml* ./
+COPY ./shared/package.json ./shared/yarn.lock* ./shared/package-lock.json* ./shared/pnpm-lock.yaml* ./
 RUN \
   if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
   elif [ -f package-lock.json ]; then npm ci; \
@@ -78,4 +78,5 @@ COPY ./shared /shared
 
 USER nodejs
 EXPOSE ${COINMATICA_TELEGRAM_PORT}
+ENV PORT ${COINMATICA_TELEGRAM_PORT}
 CMD ["npm", "run", "dev"]
