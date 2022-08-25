@@ -52,7 +52,7 @@ RUN \
 
 # Production image, copy all the files and run next
 FROM node-with-python AS runner
-ARG PORT
+ARG COINMATICA_TELEGRAM_PORT
 ARG MONGO_USER
 ARG MONGO_PASS
 ARG MONGO_DB
@@ -77,5 +77,5 @@ COPY ./coinmatica-telegram .
 COPY ./shared /shared
 
 USER nodejs
-EXPOSE ${PORT}
+EXPOSE ${COINMATICA_TELEGRAM_PORT}
 CMD ["npm", "run", "dev"]

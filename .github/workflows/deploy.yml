@@ -8,6 +8,18 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment: production
+    env:
+      COINMATICA_TELEGRAM_PORT: ${{secrets.COINMATICA_TELEGRAM_PORT}}
+      MONGO_USER: ${{secrets.MONGO_USER}}
+      MONGO_PASS: ${{secrets.MONGO_PASS}}
+      MONGO_DB: ${{secrets.MONGO_DB}}
+      MONGO_URL: ${{secrets.MONGO_URL}}
+      REDIS_URL: ${{secrets.REDIS_URL}}
+      SOKETI_APP_ID: ${{secrets.SOKETI_APP_ID}}
+      SOKETI_APP_KEY: ${{secrets.SOKETI_APP_KEY}}
+      SOKETI_APP_SECRET: ${{secrets.SOKETI_APP_SECRET}}
+      SOKETI_HOST: ${{secrets.SOKETI_HOST}}
+      SOKETI_PORT: ${{secrets.SOKETI_PORT}}
 
     steps:
     - uses: actions/checkout@v2
