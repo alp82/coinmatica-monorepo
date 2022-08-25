@@ -1,13 +1,11 @@
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 import React from 'react'
-import Link from 'next/link'
 import Image from 'next/image'
 import { signOut, useSession } from 'next-auth/react'
 
 import { classNames } from '../utils/styles'
 import logo from '../images/logo.png'
-import { useRouter } from 'next/router'
 import A from './ui/A'
 
 const navigation = [

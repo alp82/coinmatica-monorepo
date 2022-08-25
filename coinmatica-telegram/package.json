@@ -13,6 +13,8 @@
     "abort-controller": "^3.0.0",
     "dotenv": "^16.0.1",
     "node-fetch": "^2.6.1",
+    "pusher": "^5.1.1-beta",
+    "pusher-js": "^7.4.0",
     "tdl": "^7.0.0",
     "tdl-tdlib-addon": "^1.1.0",
     "tdlib-types": "^0.1001008.1",
