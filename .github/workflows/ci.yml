@@ -1,36 +1,61 @@
-# This is a basic workflow to help you get started with Actions
-
 name: CI
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches: [ main ]
+#  pull_request:
+#    branches: [ "main" ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  deploy:
     runs-on: ubuntu-latest
+    environment: production
+    env:
+      COINMATICA_APP_PORT: ${{secrets.COINMATICA_APP_PORT}}
+      COINMATICA_TELEGRAM_PORT: ${{secrets.COINMATICA_TELEGRAM_PORT}}
+      NEXTAUTH_SECRET: ${{secrets.NEXTAUTH_SECRET}}
+      NEXTAUTH_URL: ${{secrets.NEXTAUTH_URL}}
+      DISCORD_CLIENT_ID: ${{secrets.DISCORD_CLIENT_ID}}
+      DISCORD_CLIENT_SECRET: ${{secrets.DISCORD_CLIENT_SECRET}}
+      MONGO_USER: ${{secrets.MONGO_USER}}
+      MONGO_PASS: ${{secrets.MONGO_PASS}}
+      MONGO_DB: ${{secrets.MONGO_DB}}
+      MONGO_URL: ${{secrets.MONGO_URL}}
+      REDIS_URL: ${{secrets.REDIS_URL}}
+      SOKETI_APP_ID: ${{secrets.SOKETI_APP_ID}}
+      SOKETI_APP_KEY: ${{secrets.SOKETI_APP_KEY}}
+      SOKETI_APP_SECRET: ${{secrets.SOKETI_APP_SECRET}}
+      SOKETI_HOST: ${{secrets.SOKETI_HOST}}
+      SOKETI_PORT: ${{secrets.SOKETI_PORT}}
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+    - uses: actions/checkout@v3
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-          
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+    - name: Debug Env
+      run: |
+        echo port: "${COINMATICA_APP_PORT}"
+        echo mongo: "${MONGO_URL}"
+        echo soketi: "${SOKETI_HOST}"
+
+    - name: Set env vars on remote server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HETZNER_SSH_HOST }}
+        username: ${{ secrets.HETZNER_SSH_USER }}
+        key: ${{ secrets.HETZNER_SSH_PRIVATE_KEY  }}
+        port: 22
+        script: |
+          sed -n -e '/^COINMATICA_APP_PORT=/!p' -e '$aCOINMATICA_APP_PORT=${COINMATICA_APP_PORT}' /etc/environment
+          sed -n -e '/^COINMATICA_TELEGRAM_PORT=/!p' -e '$aCOINMATICA_TELEGRAM_PORT=${COINMATICA_TELEGRAM_PORT}' /etc/environment
+
+    - uses: alex-ac/github-action-ssh-docker-compose@master
+      name: Docker-Compose Remote Deployment
+      with:
+        ssh_host: ${{secrets.HETZNER_SSH_HOST}}
+        ssh_user: ${{secrets.HETZNER_SSH_USER}}
+        ssh_private_key: ${{secrets.HETZNER_SSH_PRIVATE_KEY}}
+        docker_compose_prefix: coinmatica
+        docker_compose_filename: docker-compose.yml
