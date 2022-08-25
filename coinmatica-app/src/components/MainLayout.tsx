@@ -8,7 +8,7 @@ interface MainLayoutProps {
 
 const MainLayout = ({ children }: MainLayoutProps) => {
   return (
-    <>
+    <div className="min-h-full">
       {/*
         This example requires updating your template:
 
@@ -17,11 +17,11 @@ const MainLayout = ({ children }: MainLayoutProps) => {
         <body class="h-full">
         ```
       */}
-      <main className="container flex flex-col items-center justify-center min-h-screen p-4 mx-auto">
-        <AppHeader />
+      <AppHeader />
+      <main className="max-w-5xl">
         {children}
       </main>
-    </>
+    </div>
   )
 }
 

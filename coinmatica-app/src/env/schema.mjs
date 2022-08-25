@@ -10,9 +10,16 @@ export const serverSchema = z.object({
   DISCORD_CLIENT_SECRET: z.string(),
   MONGO_DB: z.string(),
   MONGO_URL: z.string(),
+  MONGO_USER: z.string(),
+  MONGO_PASS: z.string(),
   NEXTAUTH_SECRET: z.string(),
   NEXTAUTH_URL: z.string().url(),
   REDIS_URL: z.string(),
+  SOKETI_APP_ID: z.string(),
+  SOKETI_APP_KEY: z.string(),
+  SOKETI_APP_SECRET: z.string(),
+  SOKETI_HOST: z.string(),
+  SOKETI_PORT: z.string(),
 });
 
 /**

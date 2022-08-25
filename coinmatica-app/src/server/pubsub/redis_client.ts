@@ -1,6 +1,6 @@
-import { env } from '../../env/server.mjs'
-
 import Redis from "ioredis"
+
+import { env } from '../../env/server.mjs'
 
 let client: Redis
 

@@ -16,7 +16,10 @@
     "incremental": true,
     "noUncheckedIndexedAccess": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "paths": {
+      "@shared/*": ["../shared/*"],
+    }
   },
   "include": [
     "next-env.d.ts",

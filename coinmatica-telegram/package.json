@@ -1,36 +1,39 @@
 {
-  "name": "coinmatica-telegram",
+  "name": "@coinmatica/telegram",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "PORT=3100 next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "nodemon -e ts -w . -x ts-node -r tsconfig-paths/register ./src/server",
+    "build": "tsc"
   },
   "dependencies": {
-    "next": "12.2.5",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "zod": "^3.18.0",
-    "@tanstack/react-query": "^4.2.1",
-    "superjson": "^1.9.1",
-    "@trpc/server": "10.0.0-alpha.48",
-    "@trpc/client": "10.0.0-alpha.48",
-    "@trpc/next": "10.0.0-alpha.48",
-    "@trpc/react": "10.0.0-alpha.48"
+    "@trpc/client": "^9.27.2",
+    "@trpc/react": "^9.27.2",
+    "@trpc/server": "^9.27.2",
+    "abort-controller": "^3.0.0",
+    "dotenv": "^16.0.1",
+    "node-fetch": "^2.6.1",
+    "tdl": "^7.0.0",
+    "tdl-tdlib-addon": "^1.1.0",
+    "tdlib-types": "^0.1001008.1",
+    "ws": "^8.0.0",
+    "zod": "^3.0.0"
+  },
+  "alias": {
+    "scheduler/tracing": "../../node_modules/scheduler/tracing-profiling"
   },
   "devDependencies": {
-    "@types/node": "18.0.0",
-    "@types/react": "18.0.14",
-    "@types/react-dom": "18.0.5",
-    "@typescript-eslint/eslint-plugin": "^5.33.0",
-    "@typescript-eslint/parser": "^5.33.0",
-    "eslint": "8.22.0",
-    "eslint-config-next": "12.2.5",
-    "typescript": "4.7.4"
+    "@types/node-fetch": "^2.5.11",
+    "@types/ws": "^8.2.0",
+    "nodemon": "^2.0.12",
+    "npm-run-all": "^4.1.5",
+    "start-server-and-test": "^1.12.0",
+    "ts-node": "^10.3.0",
+    "tsconfig-paths": "^4.1.0",
+    "typescript": "4.4.4",
+    "wait-port": "^0.3.0"
   },
-  "ct3aMetadata": {
-    "initVersion": "6.0.0-next.2d558e1"
+  "publishConfig": {
+    "access": "restricted"
   }
 }

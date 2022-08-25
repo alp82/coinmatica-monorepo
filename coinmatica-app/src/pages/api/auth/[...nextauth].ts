@@ -2,10 +2,10 @@ import NextAuth, { type NextAuthOptions } from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
 import { env } from "../../../env/server.mjs";
 import { MongoDBAdapter } from '@next-auth/mongodb-adapter'
-import { mongoConnectionPromise } from '../../../server/db/mongo_client'
+import { getConnectionPromise } from '../../../server/db/mongo_client'
 
 export const authOptions: NextAuthOptions = {
-  adapter: MongoDBAdapter(mongoConnectionPromise),
+  adapter: MongoDBAdapter(getConnectionPromise()),
   // Include user.id on session
   callbacks: {
     jwt: ({token,user, account, profile}) => {

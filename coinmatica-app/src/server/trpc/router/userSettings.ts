@@ -1,6 +1,8 @@
-import { z } from "zod";
-import { t } from "../utils";
+import { z } from 'zod'
+import { t } from '../utils'
 import { getCollectionUserSettings } from '../../db/mongo_collections'
+import { Event, PusherEnv, send } from '../../../../../shared/pubsub/pusher_client'
+import { env } from '../../../env/server.mjs'
 
 export const userSettingsRouter = t.router({
 
@@ -29,6 +31,11 @@ export const userSettingsRouter = t.router({
       const update = { $set: { mobilePhoneNumber }};
       const options = { upsert: true };
       const updateResult = await collectionUserSettings.updateOne(query, update, options);
+
+      await send(Event.USER_MOBILE_UPDATED, {
+        userId,
+        mobilePhoneNumber,
+      }, env as unknown as PusherEnv)
 
       return {
         updateResult,

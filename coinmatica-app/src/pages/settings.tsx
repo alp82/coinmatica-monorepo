@@ -11,6 +11,7 @@ import TextInput from '../components/ui/TextInput'
 import { TelegramConnectionStatus } from '../types/models/TelegramClientInfo'
 import { UserSettings } from '../types/models/UserSettings'
 import MainLayout from '../components/MainLayout'
+import A from '../components/ui/A'
 
 const navigation = [
   {name: 'Account', href: '#', icon: UserCircleIcon, current: true},
@@ -74,9 +75,9 @@ const Settings = () => {
   if (!session) {
     return <>
       <h2>Not authorized</h2>
-      <Link href="/">
-        <a>back</a>
-      </Link>
+      <A href="/">
+        back
+      </A>
     </>
   }
 

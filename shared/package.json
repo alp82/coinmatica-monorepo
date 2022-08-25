@@ -1,0 +1,14 @@
+{
+  "name": "coinmatica-shared",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "dependencies": {
+    "pusher": "^5.1.1-beta",
+    "pusher-js": "^7.4.0"
+  }
+}
