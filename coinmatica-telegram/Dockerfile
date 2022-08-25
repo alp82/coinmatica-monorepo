@@ -34,6 +34,22 @@ RUN \
   fi
 
 
+# Install dependencies only when needed
+FROM node-with-python AS deps-shared
+# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
+RUN apk add --no-cache libc6-compat
+WORKDIR /shared
+
+# Install dependencies based on the preferred package manager
+COPY ./shared/package.json ./shared/yarn.lock* ./shared/package-lock.json* pnpm-lock.yaml* ./
+RUN \
+  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
+  elif [ -f package-lock.json ]; then npm ci; \
+  elif [ -f pnpm-lock.yaml ]; then yarn global add pnpm && pnpm i; \
+  else echo "Lockfile not found." && exit 1; \
+  fi
+
+
 # Production image, copy all the files and run next
 FROM node-with-python AS runner
 ARG PORT
@@ -45,6 +61,7 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nodejs
 
 COPY --from=deps /app/node_modules ./node_modules
+COPY --from=deps-shared /shared/node_modules /shared/node_modules
 COPY ./coinmatica-telegram .
 COPY ./shared /shared
 
