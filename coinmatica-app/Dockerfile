@@ -49,6 +49,7 @@ ARG SOKETI_PORT
 
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
+COPY --from=deps-shared /shared/node_modules ./node_modules
 COPY ./coinmatica-app .
 COPY ./shared /shared
 
