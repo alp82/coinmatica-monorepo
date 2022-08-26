@@ -45,7 +45,7 @@ services:
       - SOKETI_HOST=${SOKETI_HOST}
       - SOKETI_PORT=${SOKETI_PORT}
     ports:
-      - ${COINMATICA_APP_PORT}:${COINMATICA_APP_PORT}
+      - 80:${COINMATICA_APP_PORT}
     restart: always
 
   coinmatica-telegram:

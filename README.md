@@ -3,9 +3,9 @@ Add new env vars to:
 1. `.env`
 2. `Dockerfile`
 3. `docker-compose.yml`
-4. `/.github/workflows/deploy.yml`
-5. [github actions](https://github.com/alp82/coinmatica-monorepo/settings/environments/599537452/edit)
-6. [vercel settings](https://vercel.com/alp82/coinmatica/settings/environment-variables)
+4. `/.github/workflows/ci.yml`
+5. Remote server `/etc/environment`
+6. [github actions](https://github.com/alp82/coinmatica-monorepo/settings/environments/599537452/edit)
 
 # Dockerize Howto
 
