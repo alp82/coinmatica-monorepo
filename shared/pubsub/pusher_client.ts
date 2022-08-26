@@ -1,6 +1,8 @@
 import Pusher from 'pusher'
 import PusherClient, { Channel as PusherChannel } from 'pusher-js'
+import { getLogger } from '../log/axiom_client'
 
+const logger = getLogger()
 let pusher: Pusher
 
 export enum Channel {
@@ -22,46 +24,47 @@ export type EventData = {
   }
 }
 
-export interface PusherEnv {
-  SOKETI_APP_ID: string
-  SOKETI_APP_KEY: string
-  SOKETI_APP_SECRET: string
-  SOKETI_HOST: string
-  SOKETI_PORT: number
-}
-
-export const getPusher = (env: PusherEnv) => {
+export const getPusher = () => {
   if (pusher) return pusher
 
   pusher = new Pusher({
-    appId: env.SOKETI_APP_ID,
-    key: env.SOKETI_APP_KEY,
-    secret: env.SOKETI_APP_SECRET,
-    host: `${env.SOKETI_HOST}:${env.SOKETI_PORT}`,
+    appId: process.env.SOKETI_APP_ID || '',
+    key: process.env.SOKETI_APP_KEY || '',
+    secret: process.env.SOKETI_APP_SECRET || '',
+    host: `${process.env.SOKETI_HOST}:${process.env.SOKETI_PORT}`,
     useTLS: false,
   })
 
   return pusher
 }
 
-export const send = async <T extends Event>(event: T, data: EventData[T], env: PusherEnv) => {
-  const pusher = getPusher(env)
+export const send = async <T extends Event>(event: T, data: EventData[T]) => {
+  const pusher = getPusher()
+  const channel = EventChannel[event]
   await pusher.trigger(
-    EventChannel[event],
+    channel,
     event,
     data,
+  )
+  logger.info(
+    `event: ${event} (${channel})`,
+    {
+      channel,
+      event,
+      data,
+    }
   )
 }
 
 let pusherClient: PusherClient
 const subscriptions: Record<string, PusherChannel> = {}
 
-export const getPusherClient = (env: PusherEnv) => {
+export const getPusherClient = () => {
   if (pusherClient) return pusherClient
 
-  pusherClient = new PusherClient(env.SOKETI_APP_KEY,{
-    wsHost: env.SOKETI_HOST,
-    wsPort: env.SOKETI_PORT,
+  pusherClient = new PusherClient(process.env.SOKETI_APP_KEY || '',{
+    wsHost: process.env.SOKETI_HOST || '',
+    wsPort: Number.parseInt(process.env.SOKETI_PORT || ''),
     forceTLS: false,
     disableStats: true,
     enabledTransports: ['ws', 'wss'],
@@ -70,8 +73,8 @@ export const getPusherClient = (env: PusherEnv) => {
   return pusherClient
 }
 
-export const on = <T extends Event>(event: T, callback: (data: EventData[T]) => void, env: PusherEnv) => {
-  const pusher = getPusherClient(env)
+export const on = <T extends Event>(event: T, callback: (data: EventData[T]) => void) => {
+  const pusher = getPusherClient()
 
   if (!subscriptions[EventChannel[event]]) {
     subscriptions[EventChannel[event]] = pusher.subscribe(EventChannel[event])
