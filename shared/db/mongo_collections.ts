@@ -1,6 +1,6 @@
 import { getDB } from './mongo_client'
-import { UserSettings } from '../../types/models/UserSettings'
-import { TelegramClientInfo } from '../../types/models/TelegramClientInfo'
+import { UserSettings } from '../types/models/UserSettings'
+import { TelegramClientInfo } from '../types/models/TelegramClientInfo'
 
 export enum Collection {
   // LOGS = 'logs',
