@@ -24,14 +24,14 @@ const Settings = () => {
   const userId = session?.user?.id || ''
 
   const userSettings = trpc.proxy.userSettings.fetch.useQuery(
-    {userId},
+    undefined,
     {enabled: Boolean(userId)},
   )
   const updateMobile = trpc.proxy.userSettings.updateMobile.useMutation()
   const updateTelegram = trpc.proxy.userSettings.updateTelegram.useMutation()
 
   const telegramClientInfo = trpc.proxy.telegram.fetchClientInfo.useQuery(
-    {userId},
+    undefined,
     {enabled: Boolean(userId)},
   )
 
@@ -42,7 +42,6 @@ const Settings = () => {
 
     if (mobilePhoneNumber) {
       updateMobile.mutate({
-        userId,
         mobilePhoneNumber,
       })
     }
@@ -66,7 +65,6 @@ const Settings = () => {
 
     if (updateTelegramRequest) {
       updateTelegram.mutate({
-        userId,
         ...updateTelegramRequest,
       })
     }

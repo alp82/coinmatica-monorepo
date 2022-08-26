@@ -1,15 +1,12 @@
 import { z } from 'zod'
-import { t } from '../utils'
-import { getCollectionTelegramClientInfo } from '../../db/mongo_collections'
+import { authedProcedure, t } from '../utils'
+import { getCollectionTelegramClientInfo } from '../../../../../shared/db/mongo_collections'
 
 export const telegramRouter = t.router({
 
-  fetchClientInfo: t.procedure
-    .input(z.object({
-      userId: z.string(),
-    }))
-    .query(async ({ input }) => {
-      const { userId } = input
+  fetchClientInfo: authedProcedure
+    .query(async ({ ctx }) => {
+      const userId = ctx.session.user.id
       const collectionTelegramClientInfo = await getCollectionTelegramClientInfo()
 
       const query = { userId }

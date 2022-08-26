@@ -1,6 +1,6 @@
 import Pusher from 'pusher'
 import PusherClient, { Channel as PusherChannel } from 'pusher-js'
-import { getLogger } from '../log/axiom_client'
+import { getLogger, LogCode } from '../log/logtail_client'
 
 const logger = getLogger()
 let pusher: Pusher
@@ -10,17 +10,25 @@ export enum Channel {
 }
 
 export enum Event {
-  USER_MOBILE_UPDATED = 'mobile-updated'
+  USER_MOBILE_UPDATED = 'mobile-updated',
+  USER_TELEGRAM_UPDATED = 'telegram-updated',
 }
 
 export const EventChannel = {
   [Event.USER_MOBILE_UPDATED]: Channel.USER_SETTINGS,
+  [Event.USER_TELEGRAM_UPDATED]: Channel.USER_SETTINGS,
 }
 
 export type EventData = {
   [Event.USER_MOBILE_UPDATED]: {
     userId: string
     mobilePhoneNumber: string
+  }
+  [Event.USER_TELEGRAM_UPDATED]: {
+    userId: string
+    telegramAppApiId?: string
+    telegramAppApiHash?: string
+    telegramAuthCode?: string
   }
 }
 
@@ -49,6 +57,7 @@ export const send = async <T extends Event>(event: T, data: EventData[T]) => {
   logger.info(
     `event: ${event} (${channel})`,
     {
+      logCode: LogCode.EVENT,
       channel,
       event,
       data,

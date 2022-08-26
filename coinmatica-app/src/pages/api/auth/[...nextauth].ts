@@ -1,8 +1,9 @@
 import NextAuth, { type NextAuthOptions } from 'next-auth'
 import DiscordProvider from 'next-auth/providers/discord'
-import { env } from '../../../env/server.mjs'
 import { MongoDBAdapter } from '@next-auth/mongodb-adapter'
-import { getConnectionPromise } from '../../../server/db/mongo_client'
+import { env } from '../../../env/server.mjs'
+
+import { getConnectionPromise } from '../../../../../shared/db/mongo_client'
 
 export const authOptions: NextAuthOptions = {
   adapter: MongoDBAdapter(getConnectionPromise()),
