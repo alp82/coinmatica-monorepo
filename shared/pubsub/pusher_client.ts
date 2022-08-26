@@ -35,34 +35,58 @@ export type EventData = {
 export const getPusher = () => {
   if (pusher) return pusher
 
-  pusher = new Pusher({
-    appId: process.env.SOKETI_APP_ID || '',
-    key: process.env.SOKETI_APP_KEY || '',
-    secret: process.env.SOKETI_APP_SECRET || '',
-    host: `${process.env.SOKETI_HOST}:${process.env.SOKETI_PORT}`,
-    useTLS: false,
-  })
-
+  try {
+    pusher = new Pusher({
+      appId: process.env.SOKETI_APP_ID || '',
+      key: process.env.SOKETI_APP_KEY || '',
+      secret: process.env.SOKETI_APP_SECRET || '',
+      host: `${process.env.SOKETI_HOST}:${process.env.SOKETI_PORT}`,
+      useTLS: false,
+    })
+  } catch (error: any) {
+    logger.error(
+      `pusher/soketi connection failed`,
+      {
+        logCode: LogCode.EVENT,
+        host: process.env.SOKETI_HOST || '',
+        port: process.env.SOKETI_PORT || '',
+        error,
+      }
+    )
+  }
   return pusher
 }
 
 export const send = async <T extends Event>(event: T, data: EventData[T]) => {
   const pusher = getPusher()
   const channel = EventChannel[event]
-  await pusher.trigger(
-    channel,
-    event,
-    data,
-  )
-  logger.info(
-    `event: ${event} (${channel})`,
-    {
-      logCode: LogCode.EVENT,
+  try {
+    await pusher.trigger(
       channel,
       event,
       data,
-    }
-  )
+    )
+    logger.info(
+      `event: ${event} (${channel})`,
+      {
+        logCode: LogCode.EVENT,
+        channel,
+        event,
+        data,
+      }
+    )
+  } catch (error: any) {
+    logger.error(
+      `sending event failed`,
+      {
+        logCode: LogCode.EVENT,
+        channel,
+        event,
+        data,
+        error,
+      }
+    )
+  }
 }
 
 let pusherClient: PusherClient
@@ -71,13 +95,25 @@ const subscriptions: Record<string, PusherChannel> = {}
 export const getPusherClient = () => {
   if (pusherClient) return pusherClient
 
-  pusherClient = new PusherClient(process.env.SOKETI_APP_KEY || '',{
-    wsHost: process.env.SOKETI_HOST || '',
-    wsPort: Number.parseInt(process.env.SOKETI_PORT || ''),
-    forceTLS: false,
-    disableStats: true,
-    enabledTransports: ['ws', 'wss'],
-  })
+  try {
+    pusherClient = new PusherClient(process.env.SOKETI_APP_KEY || '',{
+      wsHost: process.env.SOKETI_HOST || '',
+      wsPort: Number.parseInt(process.env.SOKETI_PORT || ''),
+      forceTLS: false,
+      disableStats: true,
+      enabledTransports: ['ws', 'wss'],
+    })
+  } catch (error: any) {
+    logger.error(
+      `pusher/soketi connection failed`,
+      {
+        logCode: LogCode.EVENT,
+        host: process.env.SOKETI_HOST || '',
+        port: process.env.SOKETI_PORT || '',
+        error,
+      }
+    )
+  }
 
   return pusherClient
 }
@@ -91,7 +127,15 @@ export const on = <T extends Event>(event: T, callback: (data: EventData[T]) => 
   const channel = subscriptions[EventChannel[event]]
 
   if (!channel) {
-    throw Error(`channel ${EventChannel[event]} does not exist`)
+    logger.error(
+      `subscription failed: pusher channel ${EventChannel[event]} does not exist`,
+      {
+        logCode: LogCode.EVENT,
+        channel: EventChannel[event],
+        event,
+      }
+    )
+    return
   }
 
   channel.bind(event, callback)

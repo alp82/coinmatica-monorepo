@@ -11,6 +11,16 @@ let client: Logtail
 
 export const getLogger = () => {
   if (client) return client
-  client = new Logtail(process.env.LOGTAIL_TOKEN || '')
+  try {
+    client = new Logtail(process.env.LOGTAIL_TOKEN || '')
+  } catch (error: any) {
+    console.error(
+      `logtail connection failed`,
+      {
+        logCode: LogCode.EVENT,
+        error,
+      }
+    )
+  }
   return client
 }

@@ -1,6 +1,9 @@
 import { getDB } from './mongo_client'
 import { UserSettings } from '../types/models/UserSettings'
 import { TelegramClientInfo } from '../types/models/TelegramClientInfo'
+import { getLogger, LogCode } from '../log/logtail_client'
+
+const logger = getLogger()
 
 export enum Collection {
   // LOGS = 'logs',
@@ -9,26 +12,27 @@ export enum Collection {
   USER_SETTINGS = 'user-settings',
 }
 
-export const getCollectionUserSettings = async () => {
+const createCollectionIfNotExisting = async (collection: Collection) => {
   const db = await getDB()
   try {
-    await db.createCollection(Collection.USER_SETTINGS)
-    // logger.info(`Created missing MongoDB collection "${Collection.USER_SETTINGS}"`, { metadata: {
-    //     logCode: LogCode.DB,
-    //   }})
+    await db.createCollection(collection)
+    logger.debug(`Created missing MongoDB collection "${collection}"`, {
+      logCode: LogCode.DB,
+    })
   } catch(error) {
   }
-  return db.collection<UserSettings>(Collection.USER_SETTINGS)
+}
+
+export const getCollectionUserSettings = async () => {
+  const db = await getDB()
+  const collection = Collection.USER_SETTINGS
+  await createCollectionIfNotExisting(collection)
+  return db.collection<UserSettings>(collection)
 }
 
 export const getCollectionTelegramClientInfo = async () => {
   const db = await getDB()
-  try {
-    await db.createCollection(Collection.TELEGRAM_CLIENT_INFO)
-    // logger.info(`Created missing MongoDB collection "${Collection.TELEGRAM_CLIENT_INFO}"`, { metadata: {
-    //     logCode: LogCode.DB,
-    //   }})
-  } catch(error) {
-  }
-  return db.collection<TelegramClientInfo>(Collection.TELEGRAM_CLIENT_INFO)
+  const collection = Collection.TELEGRAM_CLIENT_INFO
+  await createCollectionIfNotExisting(collection)
+  return db.collection<TelegramClientInfo>(collection)
 }
