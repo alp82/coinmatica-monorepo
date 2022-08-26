@@ -33,6 +33,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      name: Checkout Repository
 
 #    - name: Set env vars on remote server
 #      uses: appleboy/ssh-action@master
