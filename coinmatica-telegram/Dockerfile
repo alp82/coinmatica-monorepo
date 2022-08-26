@@ -53,6 +53,7 @@ RUN \
 # Production image, copy all the files and run next
 FROM node-with-python AS runner
 ARG COINMATICA_TELEGRAM_PORT
+ARG LOGTAIL_TOKEN
 ARG MONGO_USER
 ARG MONGO_PASS
 ARG MONGO_DB
