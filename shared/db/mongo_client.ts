@@ -10,9 +10,6 @@ export const getConnectionPromise = () => {
   if (!client) {
     try {
       client = new MongoClient(process.env.MONGO_URL || '')
-      logger.debug('MongoDB client successfully initialized', {
-        logCode: LogCode.DB,
-      })
     } catch (error: any) {
       logger.error('MongoDB client could not be initialized', {
         logCode: LogCode.DB,
@@ -35,9 +32,6 @@ export const getDB = async () => {
   try {
     database = client.db(process.env.MONGO_DB);
     await database.command({ ping: 1 })
-    logger.debug('MongoDB connected successfully', { metadata: {
-      logCode: LogCode.DB,
-    }})
   } catch (error: any) {
     logger.error('MongoDB connection failed', {
       logCode: LogCode.DB,
