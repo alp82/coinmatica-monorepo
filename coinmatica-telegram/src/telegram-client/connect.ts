@@ -43,7 +43,7 @@ export const connectTelegramClient = async (
   // configure new client
   let client: Client
   try {
-    client = new Client(new TDLib('libtdjson.so'), {
+    client = new Client(new TDLib(), {
       apiId: parseInt(userSettings?.telegramAppApiId || ''),
       apiHash: userSettings?.telegramAppApiHash,
       skipOldUpdates: false,
