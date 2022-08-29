@@ -69,6 +69,7 @@ ARG SOKETI_PORT
 WORKDIR /app
 
 ENV NODE_ENV production
+ENV TDLIB_PATH /usr/local/lib/libtdjson.so
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nodejs
