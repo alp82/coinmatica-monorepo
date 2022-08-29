@@ -41,3 +41,7 @@ yarn-error.log*
 
 # ide
 .idea
+
+# tdlib
+_td_database
+_td_files

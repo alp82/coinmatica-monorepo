@@ -5,18 +5,15 @@ dotenv.config()
 import * as trpc from '@trpc/server';
 import { createHTTPServer } from '@trpc/server/adapters/standalone';
 import { z } from 'zod';
-import { Event, on } from '../../shared/pubsub/pusher_client'
+
 import { startTelegramClients } from './telegram-client/init'
+import { watchTelegramClientInfo } from './telegram-client/watch'
 
 
 // telegram
 
 startTelegramClients()
-
-on(Event.USER_MOBILE_UPDATED, (data) => {
-  console.log(data)
-})
-
+watchTelegramClientInfo()
 
 // trpc
 
