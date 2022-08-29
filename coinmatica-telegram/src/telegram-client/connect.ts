@@ -42,10 +42,13 @@ export const connectTelegramClient = async (
 
   // configure new client
   let client: Client
+  const tdlibPath = process.env.TDLIB_PATH
+  const apiId = parseInt(userSettings?.telegramAppApiId || '')
+  const apiHash = userSettings?.telegramAppApiHash
   try {
-    client = new Client(new TDLib(process.env.TDLIB_PATH), {
-      apiId: parseInt(userSettings?.telegramAppApiId || ''),
-      apiHash: userSettings?.telegramAppApiHash,
+    client = new Client(new TDLib(tdlibPath), {
+      apiId,
+      apiHash,
       skipOldUpdates: false,
     })
     logger.debug(`telegram client created for user ${userId}`, {
@@ -56,7 +59,10 @@ export const connectTelegramClient = async (
     logger.error(`telegram client could not be created for user ${userId}`, {
       logCode: LogCode.TELEGRAM_CLIENT,
       userId,
-      error: JSON.stringify(error),
+      tdlibPath,
+      apiId,
+      apiHash,
+      error,
     })
 
     updateConnectionStatus({
@@ -109,7 +115,7 @@ export const connectTelegramClient = async (
 
   await login(client, userId, userSettings)
     .then(() => {
-      logger.info(`telegram client login successful for user ${userId}`, {
+      logger.debug(`telegram client login successful for user ${userId}`, {
         logCode: LogCode.TELEGRAM_CLIENT,
         userId,
       })
