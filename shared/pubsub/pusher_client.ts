@@ -1,6 +1,7 @@
 import Pusher from 'pusher'
 import PusherClient, { Channel as PusherChannel } from 'pusher-js'
-import { getLogger, LogCode } from '../log/logtail_client'
+import { getLogger } from '../log/winston_client'
+import { LogCode } from '../log/logCode'
 
 const logger = getLogger()
 let pusher: Pusher

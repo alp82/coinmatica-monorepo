@@ -1,7 +1,8 @@
 import { getDB } from './mongo_client'
 import { UserSettings } from '../types/models/UserSettings'
 import { TelegramClientInfo } from '../types/models/TelegramClientInfo'
-import { getLogger, LogCode } from '../log/logtail_client'
+import { getLogger } from '../log/winston_client'
+import { LogCode } from '../log/logCode'
 
 const logger = getLogger()
 

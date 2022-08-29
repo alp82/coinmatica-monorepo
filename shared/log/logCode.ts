@@ -1,0 +1,9 @@
+export enum LogCode {
+  API = 'API',
+  DB = 'DB',
+  EVENT = 'EVENT',
+  TELEGRAM_CLIENT = 'TELEGRAM_CLIENT',
+  // TELEGRAM_API = 'TELEGRAM_API',
+  // USER_SETTINGS_API = 'USER_SETTINGS_API',
+  // SIGNAL = 'SIGNAL',
+}

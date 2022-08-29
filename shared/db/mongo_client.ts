@@ -1,5 +1,6 @@
 import { Db, MongoClient } from 'mongodb'
-import { getLogger, LogCode } from '../log/logtail_client'
+import { getLogger } from '../log/winston_client'
+import { LogCode } from '../log/logCode'
 
 const logger = getLogger()
 let client: MongoClient

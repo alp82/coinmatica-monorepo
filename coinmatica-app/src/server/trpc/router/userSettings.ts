@@ -1,7 +1,8 @@
 import { z } from 'zod'
 import { authedProcedure, t } from '../utils'
 import { Event, send } from '../../../../../shared/pubsub/pusher_client'
-import { getCollectionUserSettings } from '../../../../../shared/db/mongo_collections'
+import { getCollectionTelegramClientInfo, getCollectionUserSettings } from '../../../../../shared/db/mongo_collections'
+import { TelegramConnectionStatus } from '../../../../../shared/types/models/TelegramClientInfo'
 
 export const userSettingsRouter = t.router({
 
@@ -47,11 +48,22 @@ export const userSettingsRouter = t.router({
     .mutation(async ({ ctx, input: telegramSettings }) => {
       const userId = ctx.session.user.id
       const collectionUserSettings = await getCollectionUserSettings()
+      const collectionTelegramClientInfo = await getCollectionTelegramClientInfo()
 
       const query = { userId }
+      // TODO
+      //  split into two endpoints (api creds + auth code)
+      //  (or reset auth code if necessary)
       const update = { $set: { ...telegramSettings }}
       const options = { upsert: true }
-      const updateResult = await collectionUserSettings.updateOne(query, update, options)
+      const updateResultUserSettings = await collectionUserSettings.updateOne(query, update, options)
+
+      const updateTelegramClientInfo = { $set: {
+          connectionEstablished: false,
+          connectionStatus: TelegramConnectionStatus.CONNECTION_FAILED,
+          lastMessageDate: 0,
+      }}
+      const updateResultTelegramClientInfo = await collectionTelegramClientInfo.updateOne(query, updateTelegramClientInfo, options)
 
       send(Event.USER_TELEGRAM_UPDATED, {
         userId,
@@ -59,7 +71,8 @@ export const userSettingsRouter = t.router({
       })
 
       return {
-        updateResult,
+        updateResultUserSettings,
+        updateResultTelegramClientInfo,
       }
     }),
 })

@@ -12,4 +12,5 @@ export interface TelegramClientInfo {
   userId: string
   connectionEstablished: boolean
   connectionStatus: TelegramConnectionStatus
+  lastMessageDate: number
 }

@@ -27,6 +27,10 @@
     "react-dom": "18.2.0",
     "react-query": "^3.39.2",
     "superjson": "^1.9.1",
+    "winston": "^3.8.1",
+    "winston-logzio": "^5.1.6",
+    "winston-mongodb": "^5.0.7",
+    "winston-slack-webhook-transport": "^2.1.0",
     "zod": "^3.18.0"
   },
   "devDependencies": {
