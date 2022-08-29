@@ -34,6 +34,8 @@ services:
       dockerfile: coinmatica-app/Dockerfile
       context: .
       args:
+        - APP_NAME=coinmatica-app
+        - APP_ENVIRONMENT=production
         - COINMATICA_APP_PORT=${COINMATICA_APP_PORT}
         - DISCORD_CLIENT_ID=${DISCORD_CLIENT_ID}
         - DISCORD_CLIENT_SECRET=${DISCORD_CLIENT_SECRET}
@@ -52,6 +54,8 @@ services:
         - SOKETI_HOST=${SOKETI_HOST}
         - SOKETI_PORT=${SOKETI_PORT}
     environment:
+      - APP_NAME=coinmatica-app
+      - APP_ENVIRONMENT=production
       - COINMATICA_APP_PORT=${COINMATICA_APP_PORT}
       - DISCORD_CLIENT_ID=${DISCORD_CLIENT_ID}
       - DISCORD_CLIENT_SECRET=${DISCORD_CLIENT_SECRET}
@@ -78,6 +82,8 @@ services:
       dockerfile: coinmatica-telegram/Dockerfile
       context: .
     environment:
+      - APP_NAME=coinmatica-telegram
+      - APP_ENVIRONMENT=production
       - COINMATICA_TELEGRAM_PORT=${COINMATICA_TELEGRAM_PORT}
       - LOGZIO_TOKEN=${LOGZIO_TOKEN}
       - MONGO_USER=${MONGO_USER}

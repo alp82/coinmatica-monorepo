@@ -38,7 +38,8 @@ const initLogger = () => {
       format.prettyPrint(),
     ),
     defaultMeta: {
-      service: 'coinmatica',
+      service: process.env.APP_NAME,
+      environment: process.env.APP_ENVIRONMENT,
     },
     transports: [
       //
