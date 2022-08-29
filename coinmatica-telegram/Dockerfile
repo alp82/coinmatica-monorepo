@@ -89,18 +89,6 @@ COPY --from=wcsiu/tdlib:1.8-alpine /usr/lib/libssl.a /usr/local/lib/libssl.a
 COPY --from=wcsiu/tdlib:1.8-alpine /usr/lib/libcrypto.a /usr/local/lib/libcrypto.a
 COPY --from=wcsiu/tdlib:1.8-alpine /lib/libz.a /usr/local/lib/libz.a
 
-#RUN apk add --update alpine-sdk linux-headers git zlib-dev openssl-dev gperf php cmake
-#RUN git clone https://github.com/tdlib/td.git &&\
-#  cd td &&\
-#  rm -rf build &&\
-#  mkdir build &&\
-#  cd build &&\
-#  cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr/local .. &&\
-#  cmake --build . --target install &&\
-#  cd .. &&\
-#  cd .. &&\
-#  ls -l /usr/local
-
 USER nodejs
 EXPOSE ${COINMATICA_TELEGRAM_PORT}
 ENV PORT ${COINMATICA_TELEGRAM_PORT}
