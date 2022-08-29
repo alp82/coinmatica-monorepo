@@ -1,3 +1,6 @@
+# tdlib installation inspired by:
+#  https://github.com/wcsiu/telegram-client-demo/blob/main/Dockerfile
+
 FROM node:16-alpine as node-with-python
 WORKDIR /app
 

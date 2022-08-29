@@ -56,7 +56,7 @@ export const connectTelegramClient = async (
     logger.error(`telegram client could not be created for user ${userId}`, {
       logCode: LogCode.TELEGRAM_CLIENT,
       userId,
-      error,
+      error: JSON.stringify(error),
     })
 
     updateConnectionStatus({
