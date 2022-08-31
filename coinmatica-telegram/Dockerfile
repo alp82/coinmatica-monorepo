@@ -77,6 +77,11 @@ ENV TDLIB_PATH /usr/local/lib/libtdjson.so
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nodejs
 
+RUN mkdir _td_database &&\
+    mkdir _td_files &&\
+    chown nodejs:nodejs _td_database &&\
+    chown nodejs:nodejs _td_files
+
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps-shared /shared/node_modules /shared/node_modules
 COPY ./coinmatica-telegram .
