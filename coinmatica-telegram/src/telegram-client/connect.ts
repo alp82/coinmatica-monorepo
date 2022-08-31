@@ -1,4 +1,4 @@
-import Client from 'tdl'
+import Client, { ConfigType } from 'tdl'
 import { TDLib } from 'tdl-tdlib-addon'
 import { TelegramConnectionStatus } from '../../../shared/types/models/TelegramClientInfo'
 import { UserSettings } from '../../../shared/types/models/UserSettings'

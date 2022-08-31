@@ -3,6 +3,7 @@ import { Update as Td$Update } from 'tdlib-types'
 export type OnUpdate = (userId: string, update: Td$Update, ignoreLastMessageDateUpdate: boolean) => Promise<void>
 
 export const onUpdateMessage: OnUpdate = async (userId, telegramUpdate, ignoreLastMessageDateUpdate) => {
+  const a = 'test'
   // logger.debug(
   //   `new telegram message`,
   //   {
